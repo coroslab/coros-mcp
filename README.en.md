@@ -34,8 +34,6 @@ Add the following URL to your MCP client configuration:
 https://mcp.coros.com/mcp
 
 > Supports mainstream platforms such as ChatGPT, Codex, and Claude.
->
->
 
 ---
 
@@ -46,59 +44,191 @@ Send the following command to your AI assistant to install it through conversati
 npm install -g coros-mcp
 
 > Supports OpenClaw, Workbuddy, Hermes, and other Claw-style AI assistants.
->
->
 
 ## Tool List
 
 ### Activity Analytics
 
-|**Tool**|**Description**|**Status**|
-|---|---|---|
-|`querySportRecords`|Query COROS activity records with filters for date, sport type code, distance, duration, pace, and location. Returns activity IDs and time info needed for subsequent detail and lap queries.|now|
-|`getActivityDetail`|Query detailed activity data including heart rate, pace/speed, elevation, cadence, and other comprehensive metrics.|now|
-|`analyzeActivityDetail`|Generate coach-style analysis based on activity details, with optional focus on pace, speed, or heart rate.|now|
-|`queryActivityLapData`|Query default lap or segment data for a specified activity, returned according to the display fields for that sport type in the COROS App.|new|
-|`queryCustomActivityLapData`|Query custom segment data within a precise time window of a specified activity, suitable for analyzing the last N minutes or a particular segment.|new|
-|`downloadActivityFitFiles`|Download FIT files for one or more activities for parsing complete raw activity data. Supports download by individual activity or date range.|new|
-|`queryActivityFitFileDownloadUrls`|Query raw download URLs for activity FIT files, as a fallback when the client cannot receive binary files.|new|
+<table>
+  <thead>
+    <tr>
+      <th width="32%">Tool</th>
+      <th>Description</th>
+      <th width="12%">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>querySportRecords</code></td>
+      <td>Query COROS activity records with filters for date, sport type code, distance, duration, pace, and location. Returns activity IDs and time info needed for subsequent detail and lap queries.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>getActivityDetail</code></td>
+      <td>Query detailed activity data including heart rate, pace/speed, elevation, cadence, and other comprehensive metrics.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>analyzeActivityDetail</code></td>
+      <td>Generate coach-style analysis based on activity details, with optional focus on pace, speed, or heart rate.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryActivityLapData</code></td>
+      <td>Query default lap or segment data for a specified activity, returned according to the display fields for that sport type in the COROS App.</td>
+      <td><code>new</code></td>
+    </tr>
+    <tr>
+      <td><code>queryCustomActivityLapData</code></td>
+      <td>Query custom segment data within a precise time window of a specified activity, suitable for analyzing the last N minutes or a particular segment.</td>
+      <td><code>new</code></td>
+    </tr>
+    <tr>
+      <td><code>downloadActivityFitFiles</code></td>
+      <td>Download FIT files for one or more activities for parsing complete raw activity data. Supports download by individual activity or date range.</td>
+      <td><code>new</code></td>
+    </tr>
+    <tr>
+      <td><code>queryActivityFitFileDownloadUrls</code></td>
+      <td>Query raw download URLs for activity FIT files, as a fallback when the client cannot receive binary files.</td>
+      <td><code>new</code></td>
+    </tr>
+  </tbody>
+</table>
 
-## Health & Recovery
+### Health & Recovery
 
-|**Tool**|**Description**|**Status**|
-|---|---|---|
-|`queryDailyHealthData`|Query daily health overview including steps, calories, stress, sleep, and heart rate summary. For heart-rate-only queries, use the dedicated heart rate tools.|now|
-|`querySleepData`|Query sleep score, main sleep duration, deep/light/REM ratios, wakefulness, sleep window, and nap information.|now|
-|`querySleepHrv`|Query official sleep HRV assessment and raw curves. Daily averages, normal ranges, and evaluations are based on official assessment.|new|
-|`queryAvgHeartRate`|Query daily average heart rate trends.|now|
-|`queryRestingHeartRate`|Query daily resting heart rate trends.|now|
-|`queryStressLevel`|Query daily average stress trends.|now|
-|`queryHealthCheckTimeSeries`|Query raw health check measurement curves including heart rate, HRV, stress, respiratory rate, and SpO2. Maximum query window is 7 days.|new|
-|`queryStressTimeSeries`|Query raw stress data points including time, stress value, display score, stress HRV, and stress heart rate. Maximum query window is 7 days.|new|
-|`queryRecoveryStatus`|Query current recovery percentage, recovery level, and estimated full recovery time.|now|
-|`queryMenstruationCycles`|Query menstrual cycle data including today's status, next period, daily phase, and cycle range.|new|
+<table>
+  <thead>
+    <tr>
+      <th width="32%">Tool</th>
+      <th>Description</th>
+      <th width="12%">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>queryDailyHealthData</code></td>
+      <td>Query daily health overview including steps, calories, stress, sleep, and heart rate summary. For heart-rate-only queries, use the dedicated heart rate tools.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>querySleepData</code></td>
+      <td>Query sleep score, main sleep duration, deep/light/REM ratios, wakefulness, sleep window, and nap information.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>querySleepHrv</code></td>
+      <td>Query official sleep HRV assessment and raw curves. Daily averages, normal ranges, and evaluations are based on official assessment.</td>
+      <td><code>new</code></td>
+    </tr>
+    <tr>
+      <td><code>queryAvgHeartRate</code></td>
+      <td>Query daily average heart rate trends.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryRestingHeartRate</code></td>
+      <td>Query daily resting heart rate trends.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryStressLevel</code></td>
+      <td>Query daily average stress trends.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryHealthCheckTimeSeries</code></td>
+      <td>Query raw health check measurement curves including heart rate, HRV, stress, respiratory rate, and SpO2. Maximum query window is 7 days.</td>
+      <td><code>new</code></td>
+    </tr>
+    <tr>
+      <td><code>queryStressTimeSeries</code></td>
+      <td>Query raw stress data points including time, stress value, display score, stress HRV, and stress heart rate. Maximum query window is 7 days.</td>
+      <td><code>new</code></td>
+    </tr>
+    <tr>
+      <td><code>queryRecoveryStatus</code></td>
+      <td>Query current recovery percentage, recovery level, and estimated full recovery time.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryMenstruationCycles</code></td>
+      <td>Query menstrual cycle data including today's status, next period, daily phase, and cycle range.</td>
+      <td><code>new</code></td>
+    </tr>
+  </tbody>
+</table>
 
-## Training Management
+### Training Management
 
-|**Tool**|**Description**|**Status**|
-|---|---|---|
-|`queryFitnessAssessmentOverview`|Query fitness assessment overview including VO2max, Running Performance, threshold pace, and 5K/10K/half-marathon/marathon race predictions.|now|
-|`queryTrainingLoadAssessment`|Query training load assessment including recent daily comments, short-term load, long-term load, and load ratio.|now|
-|`queryTrainingSchedule`|Query training schedule. Defaults to this week's plan and also supports specifying a date range. Results include internal identifiers for subsequent planning tools.|now|
-|`queryTrainingPlanDetail`|Query training plan details for confirming the current plan, workout dayNo, idInPlan, estimated metrics, and original workout structure before updating a plan.|coming soon|
-|`generateTrainingPlan`|Create and save a COROS training plan based on designed structured workouts. Supports running, cycling, strength, rest workouts, and phase descriptions.|coming soon|
-|`updateTrainingPlan`|Update an existing COROS training plan. Plan details should be queried first, and only the dayNo workouts that need replacement should be submitted.|coming soon|
+<table>
+  <thead>
+    <tr>
+      <th width="32%">Tool</th>
+      <th>Description</th>
+      <th width="12%">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>queryFitnessAssessmentOverview</code></td>
+      <td>Query fitness assessment overview including VO2max, Running Performance, threshold pace, and 5K/10K/half-marathon/marathon race predictions.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryTrainingLoadAssessment</code></td>
+      <td>Query training load assessment including recent daily comments, short-term load, long-term load, and load ratio.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryTrainingSchedule</code></td>
+      <td>Query training schedule. Defaults to this week's plan and also supports specifying a date range. Results include internal identifiers for subsequent planning tools.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryTrainingPlanDetail</code></td>
+      <td>Query training plan details for confirming the current plan, workout dayNo, idInPlan, estimated metrics, and original workout structure before updating a plan.</td>
+      <td><code>coming&nbsp;soon</code></td>
+    </tr>
+    <tr>
+      <td><code>generateTrainingPlan</code></td>
+      <td>Create and save a COROS training plan based on designed structured workouts. Supports running, cycling, strength, rest workouts, and phase descriptions.</td>
+      <td><code>coming&nbsp;soon</code></td>
+    </tr>
+    <tr>
+      <td><code>updateTrainingPlan</code></td>
+      <td>Update an existing COROS training plan. Plan details should be queried first, and only the dayNo workouts that need replacement should be submitted.</td>
+      <td><code>coming&nbsp;soon</code></td>
+    </tr>
+  </tbody>
+</table>
 
-## Other
+### Other
 
-|**Tool**|**Description**|**Status**|
-|---|---|---|
-|`queryDevices`|Query the list of COROS devices bound to the user, including device ID, firmware type, and custom name.|now|
-|`queryUserInfo`|Query basic user profile including height, weight, birthday, and gender.|now|
+<table>
+  <thead>
+    <tr>
+      <th width="32%">Tool</th>
+      <th>Description</th>
+      <th width="12%">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>queryDevices</code></td>
+      <td>Query the list of COROS devices bound to the user, including device ID, firmware type, and custom name.</td>
+      <td><code>now</code></td>
+    </tr>
+    <tr>
+      <td><code>queryUserInfo</code></td>
+      <td>Query basic user profile including height, weight, birthday, and gender.</td>
+      <td><code>now</code></td>
+    </tr>
+  </tbody>
+</table>
 
 > Note: As the project continues to evolve, the MCP tool list may change. To view the latest available tools, manually refresh the MCP tool list in your AI platform.
->
->
 
 ## FAQ
 
@@ -136,11 +266,28 @@ The current COROS MCP uses domain redirection technology (https://mcp.coros.com/
 
 If you encounter an invalid URL error, copy and enter the corresponding standalone routing URL based on the actual region of your account.
 
-| Account region | Standalone routing URL |
-|---|---|
-| Mainland China | `https://mcpcn.coros.com/mcp` |
-| Europe | `https://mcpeu.coros.com/mcp` |
-| United States | `https://mcpus.coros.com/mcp` |
+<table>
+  <thead>
+    <tr>
+      <th>Account region</th>
+      <th>Standalone routing URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mainland China</td>
+      <td><code>https://mcpcn.coros.com/mcp</code></td>
+    </tr>
+    <tr>
+      <td>Europe</td>
+      <td><code>https://mcpeu.coros.com/mcp</code></td>
+    </tr>
+    <tr>
+      <td>United States</td>
+      <td><code>https://mcpus.coros.com/mcp</code></td>
+    </tr>
+  </tbody>
+</table>
 
 #### AI cannot retrieve COROS data?
 
