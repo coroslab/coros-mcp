@@ -1,248 +1,185 @@
-[中文](README.md) | [English](README.en.md) | [Skill](skill/coros_mcp_login_gateway/SKILL.md)
+[中文](README.md) | [English](README.en.md) | [Skill](skill/)
 
 # COROS MCP
 
-> 将你的 COROS 运动、健康与训练数据安全连接到支持 MCP 的 AI 客户端。
-
 [![COROS MCP](https://img.shields.io/badge/COROS-MCP-blue)](https://mcp.coros.com)
-[![Agent Skill](https://img.shields.io/badge/Agent-Skill-green)](skill/coros_mcp_login_gateway/SKILL.md)
+[![Agent Skill](https://img.shields.io/badge/Agent-Skill-green)](skill/)
 
-COROS MCP 是 COROS 官方提供的 Model Context Protocol 能力。它在用户主动授权后，让 ChatGPT、Claude、Codex、OpenClaw 等支持 MCP 的 AI 客户端安全读取 COROS 服务器上的数据，用于运动分析、健康洞察、训练负荷解读、报告生成和训练计划辅助。
+## 简介
 
-COROS 相信运动员应当拥有自己的数据，并能够以自己选择的方式使用这些数据。MCP 是这一理念在 AI 时代的直接落地：你用自然语言提出问题，AI 通过受控工具读取必要数据，并把数据转化为可理解、可行动的分析。
+COROS 推出了 MCP（Model Context Protocol） 能力——这是一座安全、标准化的桥梁，能让AI安全地读取您在COROS服务器上的数据。这也是主要运动手表品牌首个官方支持的MCP。
 
-## 你可以这样使用
+您只需通过自然语言描述需求，AI 便能根据需求，通过 COROS MCP 拉取用户相应的运动、健康数据，用于进行运动分析、报表生成、健康分析、规划训练计划等多种需求：
 
-- 分析过去三个月的跑步量、配速、距离和训练负荷变化。
-- 总结最近一个月的睡眠、静息心率、HRV、压力和恢复趋势。
-- 在比赛前让 AI 结合当前训练状态，辅助规划接下来的训练安排。
-- 生成年度、月度或单场赛事报告，并结合 FIT 原始文件做更深入分析。
-- 查询设备、用户基础资料、训练日程、体能评估和恢复状态。
+- *“过去三个月我的跑步量趋势如何？”*
 
-示例提问：
+- *“过去一个月我的睡眠情况如何？”*
 
-```text
-请调用 COROS MCP，分析我过去 4 周的跑步训练负荷变化，并指出是否有过度训练风险。
-```
+- *“六周后我有一场马拉松比赛——根据我的训练情况，帮我规划一个训练计划。”*
 
-```text
-请查看我最近 30 天的睡眠、静息心率和恢复状态，帮我总结恢复质量趋势。
-```
+- “*帮我生成一张2026年度马拉松数据报告，要具有科技感和运动风格的图片。”*
 
-```text
-我 6 周后有一场马拉松。请结合我最近的训练记录和体能评估，给出训练建议。
-```
+您也可以使用它探索更多的玩法，最大化发挥数据的价值。COROS认为运动员应该拥有自己的数据，并有权自由地以任何他们选择的方式使用这些数据，而MCP就是这种信念迄今为止最直接的体现。
 
-## 快速接入
+您可以在您常用的AI平台上配置 COROS MCP，例如 ChatGPT、OpenClaw、Codex，具体的连接方式如下：
 
-### 方式一：HTTP OAuth
+## 接入指南
 
-在支持远程 MCP 的客户端中添加下面的 MCP 服务地址：
+选择以下任一方式快速配置 COROS MCP
+
+### 1. HTTP OAuth
+
+将以下 URL 添加到你的 MCP 客户端配置中
 
 ```text
 https://mcp.coros.com/mcp
 ```
 
-客户端会引导你完成 COROS 账号授权。授权成功后，AI 客户端即可在你的许可范围内调用 COROS MCP 工具。
+> 支持 ChatGPT、Codex、Claude 等主流平台
 
-适合：ChatGPT、Claude、Codex 以及其他支持 HTTP/OAuth MCP 的客户端。
+---
 
-### 方式二：Agent Skill / OpenClaw
+### 2. Skill
 
-本仓库提供一个可用于 OpenClaw 的 Agent Skill，帮助 Agent 完成登录、区域选择、工具发现和 MCP 配置。
-
-```bash
-git clone https://github.com/coroslab/COROS-MCP.git
-cd COROS-MCP/skill/coros_mcp_login_gateway
-
-python3 scripts/coros_mcp_login.py apply-openclaw --server-name coros
-openclaw mcp show coros
-```
-
-如果浏览器登录需要在另一台设备或手机上完成，建议使用两步流程：
-
-```bash
-python3 scripts/coros_mcp_login.py login-start
-python3 scripts/coros_mcp_login.py login-finish
-python3 scripts/coros_mcp_login.py apply-openclaw --server-name coros
-```
-
-把 `skill/coros_mcp_login_gateway/` 放到 Agent 可读取的 skills 目录后，也可以直接对 Agent 说：
+将以下指令发送给你的AI 助手，通过对话进行安装
 
 ```text
-使用 coros_mcp_login_gateway skill，帮我配置 COROS MCP。
-```
-
-部分 Claw 类 AI 助手也支持通过安装指令接入：
-
-```bash
 npm install -g coros-mcp
 ```
 
-## 区域与连接入口
+> 支持 OpenClaw、Workbuddy、Hermes 等 Claw 类AI
 
-推荐优先使用统一入口：
+## 工具列表
 
-```text
-https://mcp.coros.com/mcp
-```
+### Activity Analytics
 
-该入口会根据账号所在区域自动选择合适的服务集群。少数 MCP 客户端可能不支持域名重定向，导致 URL 无效或连接失败。遇到这种情况时，可根据账号实际区域改用独立入口：
+|**工具**|**说明**|**状态**|
+|---|---|---|
+|`querySportRecords`|查询 COROS 运动记录，支持按日期、运动类型编码、距离、时长、配速和地点筛选；返回后续查询详情、分圈所需的活动标识和时间信息。|now|
+|`getActivityDetail`|查询指定活动详情，包含心率、配速/速度、海拔、步频等综合数据。|now|
+|`analyzeActivityDetail`|基于活动详情生成教练式分析，可指定关注配速、速度或心率等重点。|now|
+|`queryActivityLapData`|查询指定活动的默认分圈或分段数据，按 COROS App 对应运动类型的展示字段返回。|new|
+|`queryCustomActivityLapData`|查询指定活动内某个精确时间窗的自定义分段数据，适合最后 N 分钟、指定片段等分析。|new|
+|`downloadActivityFitFiles`|下载一个或多个活动 FIT 文件，用于解析完整运动原始数据；支持按单个活动或日期范围下载。|new|
+|`queryActivityFitFileDownloadUrls`|查询活动 FIT 文件原始下载链接，作为客户端无法接收二进制文件时的兜底方式。|new|
 
-| 区域 | MCP 地址 |
-| --- | --- |
+## Health & Recovery
+
+|**工具**|**说明**|**状态**|
+|---|---|---|
+|`queryDailyHealthData`|查询每日健康总览，包括步数、卡路里、压力、睡眠和心率概览；纯心率问题应使用心率专项工具。|now|
+|`querySleepData`|查询睡眠评分、主睡眠时长、深睡/浅睡/REM 比例、清醒情况、睡眠窗口和午睡信息。|now|
+|`querySleepHrv`|查询睡眠 HRV 官方评估和原始曲线；日均值、正常范围和评价以官方评估为准。|new|
+|`queryAvgHeartRate`|查询每日平均心率趋势。|now|
+|`queryRestingHeartRate`|查询每日静息心率趋势。|now|
+|`queryStressLevel`|查询每日平均压力趋势。|now|
+|`queryHealthCheckTimeSeries`|查询健康快测原始曲线，包括心率、HRV、压力、呼吸率和血氧；最近查询窗口最多 7 天。|new|
+|`queryStressTimeSeries`|查询压力原始曲线点，包括时间、压力值、展示分数、压力 HRV 和压力心率值；查询窗口最多 7 天。|new|
+|`queryRecoveryStatus`|查询当前恢复百分比、恢复等级和预计完全恢复时间。|now|
+|`queryMenstruationCycles`|查询生理周期数据，包括今日状态、下次经期、每日阶段、周期范围。|new|
+
+## Training Management
+
+|**工具**|**说明**|**状态**|
+|---|---|---|
+|`queryFitnessAssessmentOverview`|查询体能评估概览，包括 VO2max、跑力、阈值配速和 5K/10K/半马/全马成绩预测。|now|
+|`queryTrainingLoadAssessment`|查询训练负荷评估，包括近期每日评语、短期负荷、长期负荷和负荷比。|now|
+|`queryTrainingSchedule`|查询训练日程，默认返回本周计划，也支持指定日期范围；结果包含供后续计划工具使用的内部标识。|now|
+|`queryTrainingPlanDetail`|查询训练计划详情，用于更新计划前确认当前计划、课程 dayNo、idInPlan、预估指标和原始课程结构。|coming soon|
+|`generateTrainingPlan`|根据已设计好的结构化课程创建并保存 COROS 训练计划；支持跑步、骑行、力量、休息课程和阶段说明。|coming soon|
+|`updateTrainingPlan`|更新已有 COROS 训练计划；应先查询计划详情，只提交需要替换的 dayNo 课程。|coming soon|
+
+## Other
+
+|**工具**|**说明**|**状态**|
+|---|---|---|
+|`queryDevices`|查询用户绑定的 COROS 设备列表，包括设备 ID、固件类型和自定义名称。|now|
+|`queryUserInfo`|查询用户基础资料，包括身高、体重、生日和性别。|now|
+
+> 注：随着项目持续迭代，MCP 工具列表可能发生变化，如需了解最新可用工具，请在 AI 平台中手动刷新 MCP 工具列表。
+
+
+
+## FAQ
+
+#### **COROS MCP 支持在哪些平台上使用？**
+
+MCP 是一种连接外部系统的开源标准，可以把 MCP 理解成 AI 应用的 “USB 接口”。能否接入，取决于该平台是否支持添加 MCP 服务，以及是否支持 COROS MCP 所需的认证方式。
+
+目前建议优先使用已验证支持的平台，如 ChatGPT、Claude、OpenClaw、Workbuddy、Hermes 等。
+
+如果你使用的平台暂未支持 MCP，可以关注该平台后续更新。只要平台开放兼容的 MCP 接入能力，即可按平台规则连接 COROS。
+
+#### 使用 COROS MCP 需要付费吗？
+
+COROS MCP 本身不收取费用。你可以在支持 MCP 的 AI 平台中授权连接 COROS 账号并使用已开放的功能。
+
+但请注意，部分 AI 平台可能会对 MCP、外部工具连接、高级模型或开发者模式设置会员、订阅或额度限制。这些费用由对应的 AI 平台收取，并非 COROS 决定。请以你所用平台的最新规则为准。
+
+#### **无法完成授权？**
+
+请先确认你的 COROS 账号可以在 COROS App 中正常登录和使用，并且账号内已有可查看的数据。
+
+如果仍无法授权，请检查：
+
+1. 授权页面是否已完整打开，浏览器是否拦截了弹窗或跳转。
+
+2. 是否使用了正确的 COROS 账号登录。
+
+3. AI 平台内是否已删除旧连接并重新授权。
+
+如果多次重试仍失败，请保存报错截图，并联系 COROS 客服排查。
+
+#### MCP URL 无效？
+
+当前 COROS MCP 使用了域名跳转技术（[https://mcp.coros.com/mcp](https://mcp.coros.com/mcp)），会根据您账号所在的实际区域自动切换至最佳服务器。但部分 AI 平台不支持域名重定向，从而导致报错或连接失效。
+
+如果遇到 URL 无效，请根据您**账号所在的实际地区**，直接复制并填写对应的独立分流 URL：
+
+| 账号地区 | 独立分流 URL |
+|---|---|
 | 中国大陆 | `https://mcpcn.coros.com/mcp` |
 | 欧洲 | `https://mcpeu.coros.com/mcp` |
 | 美国 | `https://mcpus.coros.com/mcp` |
 
-如果不确定账号区域，先使用统一入口，或在 Skill 中让网关自动发现区域。
+#### AI 无法拉取到 COROS 数据？
 
-## 工具能力
+如果已成功连接 COROS MCP，但 AI 没有拉取到数据，可以按以下步骤排查：
 
-COROS MCP 的工具会持续迭代。下表基于当前公开能力整理，若客户端显示的工具列表与本文略有差异，请以客户端刷新后的 MCP 工具列表为准。
+1. 确认 COROS App 内已有对应数据。设备数据需要先同步到 COROS App，再上传至云端。如果 App 内本身就没有这条数据，AI 也是无法读取到的。
 
-状态说明：
+2. 新建一个对话窗口，或在支持的客户端中发送 /new 后重新提问。
 
-- `available`：当前可用
-- `new`：近期新增
-- `planned`：即将推出或规划中
+3. 使用更明确的指令，例如：“请调用 COROS MCP，查看我最近 7 天的运动记录。”
 
-### Activity Analytics
+#### 为什么 AI 回答不准确？
 
-| 工具 | 状态 | 能力 |
-| --- | --- | --- |
-| `querySportRecords` | available | 查询 COROS 运动记录，支持按日期、运动类型编码、距离、时长、配速和地点筛选，并返回后续查询所需的活动标识。 |
-| `getActivityDetail` | available | 查询指定活动详情，包括心率、配速/速度、海拔、步频等综合指标。 |
-| `analyzeActivityDetail` | available | 基于活动详情生成教练式分析，可指定关注配速、速度或心率。 |
-| `queryActivityLapData` | new | 查询活动默认分圈或分段数据，按 COROS App 对应运动类型的展示字段返回。 |
-| `queryCustomActivityLapData` | new | 查询活动内指定时间窗的自定义分段数据，适合分析最后 N 分钟或特定片段。 |
-| `downloadActivityFitFiles` | new | 下载一个或多个活动的 FIT 文件，用于解析完整原始运动数据。 |
-| `queryActivityFitFileDownloadUrls` | new | 获取活动 FIT 文件下载链接，适合客户端无法接收二进制文件时使用。 |
+AI 的回答质量会受到模型能力、提问方式、可访问数据范围等因素影响。
 
-### Health & Recovery
+如果回答明显不准确，可以尝试换一个新对话，明确要求“调用 COROS MCP”，并指定时间范围和数据类型，例如“请调用 COROS MCP，分析我过去 4 周的跑步训练负荷变化”。
 
-| 工具 | 状态 | 能力 |
-| --- | --- | --- |
-| `queryDailyHealthData` | available | 查询每日健康总览，包括步数、卡路里、压力、睡眠和心率概览。 |
-| `querySleepData` | available | 查询睡眠评分、主睡眠时长、深睡/浅睡/REM 比例、清醒情况、睡眠窗口和午睡信息。 |
-| `querySleepHrv` | new | 查询睡眠 HRV 官方评估和原始曲线。 |
-| `queryAvgHeartRate` | available | 查询每日平均心率趋势。 |
-| `queryRestingHeartRate` | available | 查询每日静息心率趋势。 |
-| `queryStressLevel` | available | 查询每日平均压力趋势。 |
-| `queryHealthCheckTimeSeries` | new | 查询健康快测原始曲线，包括心率、HRV、压力、呼吸率和血氧；最近查询窗口最多 7 天。 |
-| `queryStressTimeSeries` | new | 查询压力原始曲线点，包括时间、压力值、展示分数、压力 HRV 和压力心率值；查询窗口最多 7 天。 |
-| `queryRecoveryStatus` | available | 查询当前恢复百分比、恢复等级和预计完全恢复时间。 |
-| `queryMenstruationCycles` | new | 查询生理周期数据，包括今日状态、下次经期、每日阶段和周期范围。 |
+推荐使用deepseek V4 flash及以上能力的模型，工具调用能力较弱的模型可能会漏用工具，或使用错误参数。
 
-### Training Management
+#### 能否拉取 .fit 文件？
 
-| 工具 | 状态 | 能力 |
-| --- | --- | --- |
-| `queryFitnessAssessmentOverview` | available | 查询体能评估概览，包括 VO2max、跑力、阈值配速和 5K/10K/半马/全马成绩预测。 |
-| `queryTrainingLoadAssessment` | available | 查询训练负荷评估，包括近期每日评语、短期负荷、长期负荷和负荷比。 |
-| `queryTrainingSchedule` | available | 查询训练日程，默认返回本周计划，也支持指定日期范围。 |
-| `queryTrainingPlanDetail` | planned | 查询训练计划详情，用于更新计划前确认当前计划、课程标识、预估指标和原始课程结构。 |
-| `generateTrainingPlan` | planned | 根据结构化课程创建并保存 COROS 训练计划。 |
-| `updateTrainingPlan` | planned | 更新已有 COROS 训练计划；建议先查询计划详情，只提交需要替换的课程。 |
+**支持。** COROS MCP 支持拉取运动记录的 `.fit` 文件，以便您进行更深入的数据分析。
 
-### Device & Profile
+同时，通过这种方式可以避免大量秒级数据直接挤爆 AI 的上下文窗口。
 
-| 工具 | 状态 | 能力 |
-| --- | --- | --- |
-| `queryDevices` | available | 查询用户绑定的 COROS 设备列表，包括设备 ID、固件类型和自定义名称。 |
-| `queryUserInfo` | available | 查询用户基础资料，包括身高、体重、生日和性别。 |
+我们提供以下两种获取方式：
 
-使用 Skill 时，也可以动态读取服务端最新工具清单：
+- **直接获取：** 直接读取 `.fit` 文件实体。
 
-```bash
-python3 scripts/coros_mcp_login.py list-tools
-python3 scripts/coros_mcp_login.py describe-tool --tool queryUserInfo
-python3 scripts/coros_mcp_login.py call-tool --tool queryUserInfo --arguments-json '{}'
-```
+- **链接获取：** 获取文件的下载链接。
 
-## FIT 文件说明
+**注：**AI 助手是否能直接为您展示或处理文件实体，取决于您当前使用的 AI 平台自身的能力与权限控制。如果遇到文件无法下载或读取，建议咨询对应的 AI 平台客服。
 
-COROS MCP 支持获取活动 `.fit` 文件，便于进行更深入的数据分析，也能避免把大量秒级数据直接塞进 AI 对话上下文。
+**每日额度限制：** 为保障服务稳定性，每个自然日内，单个账号最多支持获取 **50 条** `.fit` 文件。
 
-可用方式：
+#### 我的数据会被谁看到？安全吗？
 
-- 直接获取 FIT 文件实体。
-- 获取 FIT 文件下载链接，由客户端或用户自行处理。
+只有在你主动授权后，AI 应用才可以通过 COROS MCP 访问授权范围内的数据。你的 COROS 数据仍受 COROS 账号体系和隐私政策保护；AI 对话内容和模型处理方式则受你所使用 AI 平台的政策约束。建议只在你信任的平台上连接 COROS MCP。
 
-注意：AI 客户端能否展示、下载或解析文件实体，取决于该平台自身能力与权限控制。
+## 注意事项
 
-为保障服务稳定性，单个账号每个自然日最多可获取 **50 条** `.fit` 文件。
-
-## 常见问题
-
-### COROS MCP 需要付费吗？
-
-COROS MCP 本身不收取费用。部分 AI 平台可能会对 MCP、外部工具连接、高级模型或开发者模式设置会员、订阅或额度限制，这些费用由对应平台收取。
-
-### 授权失败怎么办？
-
-请先确认：
-
-1. COROS 账号可在 COROS App 中正常登录。
-2. 账号内已有可查看的数据。
-3. 授权页面完整打开，浏览器没有拦截弹窗或跳转。
-4. 使用的是正确的 COROS 账号。
-5. AI 平台内的旧连接已删除并重新授权。
-
-如果多次重试仍失败，请保存报错截图并联系 COROS 客服排查。
-
-### AI 拉取不到数据怎么办？
-
-请确认对应数据已同步到 COROS App 并上传到云端。然后尝试新建对话窗口，或在支持的客户端中发送 `/new` 后重新提问。
-
-提问时建议明确要求调用 COROS MCP，并给出时间范围和数据类型：
-
-```text
-请调用 COROS MCP，查看我最近 7 天的运动记录。
-```
-
-### 为什么 AI 回答不准确？
-
-AI 的回答质量会受到模型能力、提问方式、可访问数据范围和工具调用稳定性的影响。若回答明显不准确，建议新建对话，明确要求调用 COROS MCP，并指定时间范围、运动类型或健康指标。
-
-工具调用能力较弱的模型可能漏用工具或传入错误参数。建议使用具备稳定工具调用能力的模型。
-
-### 我的数据安全吗？
-
-只有在你主动授权后，AI 应用才可以通过 COROS MCP 访问授权范围内的数据。你的 COROS 数据仍受 COROS 账号体系和隐私政策保护；AI 对话内容和模型处理方式则受你所使用 AI 平台的政策约束。
-
-建议只在你信任的平台上连接 COROS MCP，并在不再使用时从对应 AI 平台或 COROS 授权管理中移除连接。
-
-## 仓库结构
-
-```text
-COROS-MCP/
-├── README.md
-├── README.en.md
-└── skill/
-    └── coros_mcp_login_gateway/
-        ├── SKILL.md
-        ├── scripts/
-        │   └── coros_mcp_login.py
-        └── tests/
-            └── test_skill_script.py
-```
-
-## 开发
-
-运行 Skill 的单元测试：
-
-```bash
-cd skill/coros_mcp_login_gateway
-python3 -m unittest discover -s tests
-```
-
-## 链接
-
-- COROS MCP: [https://mcp.coros.com](https://mcp.coros.com)
-- MCP Endpoint: `https://mcp.coros.com/mcp`
-- Agent Skill: [`skill/coros_mcp_login_gateway/`](skill/coros_mcp_login_gateway/)
-
-## 许可
-
-当前仓库暂未声明许可证。正式发布前请补充 `LICENSE` 文件。
+使用 COROS MCP 服务须遵守 COROS 的[《服务条款》](https://coros.com/terms)及[《隐私政策》](https://coros.com/privacy)。在授权第三方 AI 平台前，请确认你理解该平台对对话内容、文件和工具调用数据的处理方式；建议只在你信任的平台上连接 COROS MCP，并在不再使用时及时撤销授权。

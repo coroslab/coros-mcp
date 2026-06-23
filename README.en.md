@@ -1,248 +1,185 @@
-[中文](README.md) | [English](README.en.md) | [Skill](skill/coros_mcp_login_gateway/SKILL.md)
+[中文](README.md) | [English](README.en.md) | [Skill](skill/)
 
 # COROS MCP
 
-> Securely connect your COROS activity, wellness, and training data to AI clients that support MCP.
-
 [![COROS MCP](https://img.shields.io/badge/COROS-MCP-blue)](https://mcp.coros.com)
-[![Agent Skill](https://img.shields.io/badge/Agent-Skill-green)](skill/coros_mcp_login_gateway/SKILL.md)
+[![Agent Skill](https://img.shields.io/badge/Agent-Skill-green)](skill/)
 
-COROS MCP is the official Model Context Protocol capability from COROS. After user authorization, it lets MCP-capable AI clients such as ChatGPT, Claude, Codex, and OpenClaw securely read data from COROS servers for activity analysis, wellness insights, training-load interpretation, report generation, and training-plan assistance.
+## Introduction
 
-COROS believes athletes should own their data and have the freedom to use it in the way they choose. MCP brings that belief into AI workflows: you ask in natural language, the AI retrieves the necessary data through controlled tools, and the data becomes understandable, actionable analysis.
+COROS has introduced MCP (Model Context Protocol), a secure and standardized bridge that allows AI to safely access your data on COROS servers. It is also the first officially supported MCP from a major sports watch brand.
 
-## What You Can Do
+Simply describe what you need in natural language, and AI can use COROS MCP to retrieve the relevant activity and health data from your COROS account for activity analysis, report generation, health insights, training plan creation, and more:
 
-- Analyze running volume, pace, distance, and training-load changes across the past few months.
-- Summarize recent sleep, resting heart rate, HRV, stress, and recovery trends.
-- Ask for training suggestions before a race based on recent workouts and fitness assessment data.
-- Generate yearly, monthly, or race-specific reports, with deeper analysis from FIT files when needed.
-- Query devices, profile basics, training schedules, fitness assessment, and recovery status.
+- "How has my running volume changed over the past three months?"
 
-Example prompts:
+- "How has my sleep been over the past month?"
 
-```text
-Call COROS MCP and analyze how my running training load changed over the past 4 weeks. Flag any overtraining risk.
-```
+- "I have a marathon in six weeks. Based on my training so far, help me create a training plan."
 
-```text
-Review my sleep, resting heart rate, and recovery status from the last 30 days, then summarize my recovery trend.
-```
+- "Generate a 2026 London Marathon race report for me, with a tech-inspired visual style and running-themed imagery."
 
-```text
-I have a marathon in 6 weeks. Use my recent workouts and fitness assessment to suggest how I should train next.
-```
+You can also use it to explore more possibilities and unlock the full value of your data. COROS believes athletes should own their own data and have the freedom to use it in whatever way they choose, and MCP is a direct expression of that belief.
 
-## Quick Start
+You can configure COROS MCP on your preferred AI platform, such as ChatGPT, OpenClaw, or Codex. Connection methods are listed below.
 
-### Option 1: HTTP OAuth
+## Setup Guide
 
-Add the following MCP service URL to any remote-MCP client that supports HTTP and OAuth:
+Choose either of the following methods to quickly configure COROS MCP.
 
-```text
+### HTTP OAuth
+
+Add the following URL to your MCP client configuration:
+
 https://mcp.coros.com/mcp
-```
 
-The client will guide you through COROS account authorization. After authorization, the AI client can call COROS MCP tools within the scope you approved.
+> Supports mainstream platforms such as ChatGPT, Codex, and Claude.
+>
+>
 
-Best for: ChatGPT, Claude, Codex, and other clients that support HTTP/OAuth MCP.
+---
 
-### Option 2: Agent Skill / OpenClaw
+### SKILL
 
-This repository includes an Agent Skill for OpenClaw. It helps an agent complete login, region selection, tool discovery, and MCP configuration.
+Send the following command to your AI assistant to install it through conversation:
 
-```bash
-git clone https://github.com/coroslab/COROS-MCP.git
-cd COROS-MCP/skill/coros_mcp_login_gateway
-
-python3 scripts/coros_mcp_login.py apply-openclaw --server-name coros
-openclaw mcp show coros
-```
-
-If browser login needs to happen on another device or phone, use the two-step flow:
-
-```bash
-python3 scripts/coros_mcp_login.py login-start
-python3 scripts/coros_mcp_login.py login-finish
-python3 scripts/coros_mcp_login.py apply-openclaw --server-name coros
-```
-
-After placing `skill/coros_mcp_login_gateway/` in a skills directory your agent can read, you can ask the agent:
-
-```text
-Use the coros_mcp_login_gateway skill to configure COROS MCP for me.
-```
-
-Some Claw-style AI assistants also support installation through a command:
-
-```bash
 npm install -g coros-mcp
-```
 
-## Regions and Endpoints
+> Supports OpenClaw, Workbuddy, Hermes, and other Claw-style AI assistants.
+>
+>
 
-Use the global endpoint first:
+## Tool List
 
-```text
-https://mcp.coros.com/mcp
-```
+### Activity Analytics
 
-The gateway selects the appropriate service cluster based on the region of your COROS account. A few MCP clients do not support domain redirects, which can lead to invalid URL or connection errors. In that case, use the standalone endpoint for your account region:
+|**Tool**|**Description**|**Status**|
+|---|---|---|
+|`querySportRecords`|Query COROS activity records with filters for date, sport type code, distance, duration, pace, and location. Returns activity IDs and time info needed for subsequent detail and lap queries.|now|
+|`getActivityDetail`|Query detailed activity data including heart rate, pace/speed, elevation, cadence, and other comprehensive metrics.|now|
+|`analyzeActivityDetail`|Generate coach-style analysis based on activity details, with optional focus on pace, speed, or heart rate.|now|
+|`queryActivityLapData`|Query default lap or segment data for a specified activity, returned according to the display fields for that sport type in the COROS App.|new|
+|`queryCustomActivityLapData`|Query custom segment data within a precise time window of a specified activity, suitable for analyzing the last N minutes or a particular segment.|new|
+|`downloadActivityFitFiles`|Download FIT files for one or more activities for parsing complete raw activity data. Supports download by individual activity or date range.|new|
+|`queryActivityFitFileDownloadUrls`|Query raw download URLs for activity FIT files, as a fallback when the client cannot receive binary files.|new|
 
-| Region | MCP URL |
-| --- | --- |
+## Health & Recovery
+
+|**Tool**|**Description**|**Status**|
+|---|---|---|
+|`queryDailyHealthData`|Query daily health overview including steps, calories, stress, sleep, and heart rate summary. For heart-rate-only queries, use the dedicated heart rate tools.|now|
+|`querySleepData`|Query sleep score, main sleep duration, deep/light/REM ratios, wakefulness, sleep window, and nap information.|now|
+|`querySleepHrv`|Query official sleep HRV assessment and raw curves. Daily averages, normal ranges, and evaluations are based on official assessment.|new|
+|`queryAvgHeartRate`|Query daily average heart rate trends.|now|
+|`queryRestingHeartRate`|Query daily resting heart rate trends.|now|
+|`queryStressLevel`|Query daily average stress trends.|now|
+|`queryHealthCheckTimeSeries`|Query raw health check measurement curves including heart rate, HRV, stress, respiratory rate, and SpO2. Maximum query window is 7 days.|new|
+|`queryStressTimeSeries`|Query raw stress data points including time, stress value, display score, stress HRV, and stress heart rate. Maximum query window is 7 days.|new|
+|`queryRecoveryStatus`|Query current recovery percentage, recovery level, and estimated full recovery time.|now|
+|`queryMenstruationCycles`|Query menstrual cycle data including today's status, next period, daily phase, and cycle range.|new|
+
+## Training Management
+
+|**Tool**|**Description**|**Status**|
+|---|---|---|
+|`queryFitnessAssessmentOverview`|Query fitness assessment overview including VO2max, Running Performance, threshold pace, and 5K/10K/half-marathon/marathon race predictions.|now|
+|`queryTrainingLoadAssessment`|Query training load assessment including recent daily comments, short-term load, long-term load, and load ratio.|now|
+|`queryTrainingSchedule`|Query training schedule. Defaults to this week's plan and also supports specifying a date range. Results include internal identifiers for subsequent planning tools.|now|
+|`queryTrainingPlanDetail`|Query training plan details for confirming the current plan, workout dayNo, idInPlan, estimated metrics, and original workout structure before updating a plan.|coming soon|
+|`generateTrainingPlan`|Create and save a COROS training plan based on designed structured workouts. Supports running, cycling, strength, rest workouts, and phase descriptions.|coming soon|
+|`updateTrainingPlan`|Update an existing COROS training plan. Plan details should be queried first, and only the dayNo workouts that need replacement should be submitted.|coming soon|
+
+## Other
+
+|**Tool**|**Description**|**Status**|
+|---|---|---|
+|`queryDevices`|Query the list of COROS devices bound to the user, including device ID, firmware type, and custom name.|now|
+|`queryUserInfo`|Query basic user profile including height, weight, birthday, and gender.|now|
+
+> Note: As the project continues to evolve, the MCP tool list may change. To view the latest available tools, manually refresh the MCP tool list in your AI platform.
+>
+>
+
+## FAQ
+
+#### Which platforms does COROS MCP support?
+
+MCP is an open standard for connecting external systems. You can think of MCP as a "USB port" for AI applications. Whether a platform can connect depends on whether it supports adding MCP services and whether it supports the authentication method required by COROS MCP.
+
+We currently recommend using verified platforms first, such as ChatGPT, Claude, OpenClaw, Workbuddy, and Hermes.
+
+If the platform you use does not yet support MCP, you can follow its future updates. Once the platform opens compatible MCP connection capabilities, you will be able to connect COROS according to that platform's rules.
+
+#### Do I need to pay to use COROS MCP?
+
+COROS MCP itself is free of charge. You can authorize and connect your COROS account on AI platforms that support MCP, then use the currently available features.
+
+Please note that some AI platforms may apply membership, subscription, or quota limits to MCP, external tool connections, advanced models, or developer mode settings. These fees are charged by the corresponding AI platform and are not determined by COROS. Please refer to the latest rules of the platform you use.
+
+#### Unable to complete authorization?
+
+First, make sure your COROS account can log in and work normally in the COROS App, and that your account already contains data that can be viewed.
+
+If authorization still fails, please check:
+
+1. Whether the authorization page has fully opened, and whether your browser blocked pop-ups or redirects.
+
+2. Whether you signed in with the correct COROS account.
+
+3. Whether the old connection has been removed inside the AI platform and re-authorized.
+
+If repeated attempts still fail, save a screenshot of the error message and contact COROS customer support for troubleshooting.
+
+#### MCP URL is invalid?
+
+The current COROS MCP uses domain redirection technology (https://mcp.coros.com/mcp), which automatically switches to the best server based on the actual region of your account. However, some AI platforms do not support domain redirects, which may cause errors or connection failures.
+
+If you encounter an invalid URL error, copy and enter the corresponding standalone routing URL based on the actual region of your account.
+
+| Account region | Standalone routing URL |
+|---|---|
 | Mainland China | `https://mcpcn.coros.com/mcp` |
 | Europe | `https://mcpeu.coros.com/mcp` |
 | United States | `https://mcpus.coros.com/mcp` |
 
-If you are unsure which region applies, start with the global endpoint or let the Skill discover the region through the gateway.
+#### AI cannot retrieve COROS data?
 
-## Tool Capabilities
+If COROS MCP has been connected successfully but AI cannot retrieve data, try the following steps:
 
-COROS MCP tools continue to evolve. The table below summarizes the current public capabilities. If your client shows a slightly different list, refresh the MCP tool catalog in that client and treat the live list as authoritative.
+1. Confirm that the corresponding data already exists in the COROS App. Device data must first sync to the COROS App and then upload to the cloud. If the data does not exist in the App, AI cannot read it.
 
-Status values:
+2. Open a new conversation window, or send `/new` in a supported client before asking again.
 
-- `available`: currently available
-- `new`: recently added
-- `planned`: coming soon or planned
+3. Use more explicit instruction, such as: "Please call COROS MCP and check my activity records from the past 7 days."
 
-### Activity Analytics
+#### Why are AI answers inaccurate?
 
-| Tool | Status | Capability |
-| --- | --- | --- |
-| `querySportRecords` | available | Query COROS activity records with filters for date, sport type code, distance, duration, pace, and location. Returns activity identifiers for follow-up queries. |
-| `getActivityDetail` | available | Query detailed activity data including heart rate, pace/speed, elevation, cadence, and other metrics. |
-| `analyzeActivityDetail` | available | Generate coach-style analysis from activity detail, with optional focus on pace, speed, or heart rate. |
-| `queryActivityLapData` | new | Query default lap or segment data for an activity using the display fields for that sport type in the COROS App. |
-| `queryCustomActivityLapData` | new | Query a precise time window inside an activity, such as the final N minutes or a selected segment. |
-| `downloadActivityFitFiles` | new | Download FIT files for one or more activities for complete raw-data analysis. |
-| `queryActivityFitFileDownloadUrls` | new | Get FIT file download URLs when the client cannot receive binary files directly. |
+AI response quality can be affected by model capability, prompt wording, accessible data range, and other factors.
 
-### Health & Recovery
+If an answer is clearly inaccurate, try starting a new conversation, explicitly ask it to "call COROS MCP," and specify the time range and data type. For example: "Please call COROS MCP and analyze how my running training load changed over the past 4 weeks."
 
-| Tool | Status | Capability |
-| --- | --- | --- |
-| `queryDailyHealthData` | available | Query daily wellness overview including steps, calories, stress, sleep, and heart-rate summary. |
-| `querySleepData` | available | Query sleep score, main sleep duration, deep/light/REM ratios, awake time, sleep window, and naps. |
-| `querySleepHrv` | new | Query official sleep HRV assessment and raw HRV curves. |
-| `queryAvgHeartRate` | available | Query daily average heart-rate trends. |
-| `queryRestingHeartRate` | available | Query daily resting heart-rate trends. |
-| `queryStressLevel` | available | Query daily average stress trends. |
-| `queryHealthCheckTimeSeries` | new | Query raw wellness-check curves including heart rate, HRV, stress, respiration rate, and SpO2. Recent query windows are limited to 7 days. |
-| `queryStressTimeSeries` | new | Query raw stress data points including time, stress value, display score, stress HRV, and stress heart-rate value. Recent query windows are limited to 7 days. |
-| `queryRecoveryStatus` | available | Query current recovery percentage, recovery level, and estimated full recovery time. |
-| `queryMenstruationCycles` | new | Query menstrual-cycle data including today's status, next period, daily phase, and cycle range. |
+We recommend using models with capabilities equivalent to DeepSeek V4 Flash or higher. Models with weaker tool-calling capability may fail to use tools or may use incorrect parameters.
 
-### Training Management
+#### Can COROS MCP retrieve .fit files?
 
-| Tool | Status | Capability |
-| --- | --- | --- |
-| `queryFitnessAssessmentOverview` | available | Query fitness assessment including VO2max, running performance, threshold pace, and 5K/10K/half-marathon/marathon predictions. |
-| `queryTrainingLoadAssessment` | available | Query training-load assessment including recent daily comments, short-term load, long-term load, and load ratio. |
-| `queryTrainingSchedule` | available | Query the training schedule for this week by default or for a specified date range. |
-| `queryTrainingPlanDetail` | planned | Query training-plan detail before updates, including current plan, workout identifiers, estimated metrics, and original workout structure. |
-| `generateTrainingPlan` | planned | Create and save a COROS training plan from structured workouts. |
-| `updateTrainingPlan` | planned | Update an existing COROS training plan. Query details first and submit only workouts that need replacement. |
+**Yes.** COROS MCP supports retrieving `.fit` files for activity records, enabling deeper data analysis.
 
-### Device & Profile
+This approach also helps avoid overwhelming the AI context window with large amounts of second-by-second data.
 
-| Tool | Status | Capability |
-| --- | --- | --- |
-| `queryDevices` | available | Query bound COROS devices, including device ID, firmware type, and custom name. |
-| `queryUserInfo` | available | Query profile basics such as height, weight, birthday, and gender. |
+We provide two ways to retrieve files:
 
-When using the Skill, you can also read the live tool catalog directly from the service:
+- **Direct retrieval:** Read the `.fit` file entity directly.
 
-```bash
-python3 scripts/coros_mcp_login.py list-tools
-python3 scripts/coros_mcp_login.py describe-tool --tool queryUserInfo
-python3 scripts/coros_mcp_login.py call-tool --tool queryUserInfo --arguments-json '{}'
-```
+- **Link retrieval:** Retrieve the file download link.
 
-## FIT Files
+**Note:** Whether an AI assistant can directly display or process file entities depends on the capabilities and permission controls of the AI platform you are using. If a file cannot be downloaded or read, we recommend contacting customer support for the corresponding AI platform.
 
-COROS MCP supports retrieving activity `.fit` files for deeper data analysis. This also avoids pushing large second-by-second datasets directly into the AI conversation context.
+**Daily quota limit:** To ensure service stability, each account can retrieve up to **50** `.fit` files per calendar day.
 
-Available methods:
+#### Who can see my data? Is it safe?
 
-- Retrieve the FIT file entity directly.
-- Retrieve a FIT file download URL for the client or user to handle.
+Only after you actively authorize access can an AI application access data within the authorized scope through COROS MCP. Your COROS data remains protected by the COROS account system and privacy policy. AI conversation content and model processing methods are governed by the policies of the AI platform you use. We recommend connecting COROS MCP only on platforms you trust.
 
-Note: Whether an AI client can display, download, or parse file entities depends on that platform's own capabilities and permission controls.
+## Notice
 
-To protect service stability, each account can retrieve up to **50** `.fit` files per calendar day.
-
-## FAQ
-
-### Is COROS MCP free?
-
-COROS MCP itself is free. Some AI platforms may apply membership, subscription, or quota limits to MCP, external tool connections, advanced models, or developer-mode settings. Those fees are charged by the platform, not by COROS.
-
-### Authorization failed. What should I check?
-
-First confirm:
-
-1. Your COROS account can sign in normally in the COROS App.
-2. Your account already has data that can be viewed.
-3. The authorization page opened fully and the browser did not block pop-ups or redirects.
-4. You signed in with the correct COROS account.
-5. Old connections inside the AI platform were removed before reauthorization.
-
-If repeated attempts still fail, save a screenshot of the error and contact COROS customer support.
-
-### The AI cannot retrieve COROS data. What should I do?
-
-Make sure the relevant data already exists in the COROS App and has been uploaded to the cloud. Then start a new conversation, or send `/new` in clients that support it, before asking again.
-
-Use explicit prompts with a time range and data type:
-
-```text
-Please call COROS MCP and check my activity records from the past 7 days.
-```
-
-### Why are AI answers inaccurate?
-
-Answer quality depends on model capability, prompt wording, accessible data range, and tool-call reliability. If an answer is clearly wrong, start a new conversation, explicitly ask the model to call COROS MCP, and specify the time range, activity type, or wellness metric.
-
-Models with weak tool-calling capability may skip tools or pass incorrect arguments. Use a model with reliable tool-calling support when possible.
-
-### Is my data safe?
-
-An AI application can access data through COROS MCP only after you actively authorize it. Your COROS data remains protected by the COROS account system and privacy policy. AI conversation content and model processing are governed by the policies of the AI platform you use.
-
-Connect COROS MCP only on platforms you trust, and remove the connection from the AI platform or COROS authorization management when you no longer use it.
-
-## Repository Structure
-
-```text
-COROS-MCP/
-├── README.md
-├── README.en.md
-└── skill/
-    └── coros_mcp_login_gateway/
-        ├── SKILL.md
-        ├── scripts/
-        │   └── coros_mcp_login.py
-        └── tests/
-            └── test_skill_script.py
-```
-
-## Development
-
-Run the Skill unit tests:
-
-```bash
-cd skill/coros_mcp_login_gateway
-python3 -m unittest discover -s tests
-```
-
-## Links
-
-- COROS MCP: [https://mcp.coros.com](https://mcp.coros.com)
-- MCP Endpoint: `https://mcp.coros.com/mcp`
-- Agent Skill: [`skill/coros_mcp_login_gateway/`](skill/coros_mcp_login_gateway/)
-
-## License
-
-This repository does not declare a license yet. Add a `LICENSE` file before public release.
+Use of COROS MCP is subject to the COROS [Terms of Service](https://coros.com/terms) and [Privacy Policy](https://coros.com/privacy). Before authorizing a third-party AI platform, make sure you understand how that platform handles conversations, files, and tool-call data. We recommend connecting COROS MCP only on platforms you trust and revoking access when you no longer use it.
