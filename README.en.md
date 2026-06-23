@@ -50,7 +50,7 @@ npm install -g coros-mcp
 <details open>
 <summary><strong>Activity Analytics</strong></summary>
 
-<table>
+<table width="100%">
   <thead>
     <tr>
       <th width="34%" nowrap>Tool</th>
@@ -102,7 +102,7 @@ npm install -g coros-mcp
 <details open>
 <summary><strong>Health &amp; Recovery</strong></summary>
 
-<table>
+<table width="100%">
   <thead>
     <tr>
       <th width="34%" nowrap>Tool</th>
@@ -169,7 +169,7 @@ npm install -g coros-mcp
 <details open>
 <summary><strong>Training Management</strong></summary>
 
-<table>
+<table width="100%">
   <thead>
     <tr>
       <th width="34%" nowrap>Tool</th>
@@ -216,7 +216,7 @@ npm install -g coros-mcp
 <details open>
 <summary><strong>Other</strong></summary>
 
-<table>
+<table width="100%">
   <thead>
     <tr>
       <th width="34%" nowrap>Tool</th>
@@ -278,11 +278,28 @@ The current COROS MCP uses domain redirection technology (https://mcp.coros.com/
 
 If you encounter an invalid URL error, copy and enter the corresponding standalone routing URL based on the actual region of your account.
 
-| Account region | Standalone routing URL |
-| :--- | :--- |
-| Mainland China | `https://mcpcn.coros.com/mcp` |
-| Europe | `https://mcpeu.coros.com/mcp` |
-| United States | `https://mcpus.coros.com/mcp` |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="34%" nowrap>Account region</th>
+      <th width="66%">Standalone routing URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td nowrap>Mainland China</td>
+      <td nowrap><code>https://mcpcn.coros.com/mcp</code></td>
+    </tr>
+    <tr>
+      <td nowrap>Europe</td>
+      <td nowrap><code>https://mcpeu.coros.com/mcp</code></td>
+    </tr>
+    <tr>
+      <td nowrap>United States</td>
+      <td nowrap><code>https://mcpus.coros.com/mcp</code></td>
+    </tr>
+  </tbody>
+</table>
 
 #### 5. AI cannot retrieve COROS data?
 
